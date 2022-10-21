@@ -86,28 +86,19 @@ export default class DeltaBlindAccessory {
 
   pressOpen() {
     this.log.debug("Click Up");
-    exec(`i2cset -y 1 0x10 ${this.pinOpen} 0xFF`, (error, stdout, stderr) => {
-      if (error) {
-        this.log.debug(`error: ${error.message}`);
-        return;
-      }
-      if (stderr) {
-        this.log.debug(`stderr: ${stderr}`);
-        return;
-      }
-    });
+    exec(`i2cset -y 1 0x10 ${this.pinOpen} 0x00`);
     setTimeout(() => {
       this.log.debug("Unclick Up");
-      exec(`i2cset -y 1 0x10 ${this.pinOpen} 0x00`);
+      exec(`i2cset -y 1 0x10 ${this.pinOpen} 0xFF`);
     }, 200);
   }
 
   pressClose() {
     this.log.debug("Click Down");
-    exec(`i2cset -y 1 0x10 ${this.pinClose} 0xFF`);
+    exec(`i2cset -y 1 0x10 ${this.pinClose} 0x00`);
     setTimeout(() => {
       this.log.debug("Unclick Down");
-      exec(`i2cset -y 1 0x10 ${this.pinOpen} 0x00`);
+      exec(`i2cset -y 1 0x10 ${this.pinOpen} 0xFF`);
     }, 200);
   }
 
