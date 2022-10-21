@@ -1,6 +1,6 @@
-var rpio = require("rpio");
 import * as BlindState from "./BlindState.js";
 const debounce = require("debounce-promise");
+const { exec } = require("child_process");
 
 export default class DeltaBlindAccessory {
   constructor(log, config, api) {
@@ -18,10 +18,6 @@ export default class DeltaBlindAccessory {
     this.pinOpen = config.pinOpen;
     this.pinClose = config.pinClose;
     this.maneuverLength = config.maneuverLength * 1000;
-
-    //RPIO initiallisation
-    rpio.open(this.pinOpen, rpio.OUTPUT, rpio.LOW);
-    rpio.open(this.pinClose, rpio.OUTPUT, rpio.LOW);
 
     // create a new Window Covering service
     this.service = new this.api.hap.Service.WindowCovering(this.name);
@@ -90,19 +86,19 @@ export default class DeltaBlindAccessory {
 
   pressOpen() {
     this.log.debug("Click Up");
-    rpio.open(this.pinOpen, rpio.OUTPUT, rpio.HIGH);
+    exec(`i2cset -y 1 0x10' ${this.pinOpen} 0xFF`);
     setTimeout(() => {
       this.log.debug("Unclick Up");
-      rpio.open(this.pinOpen, rpio.OUTPUT, rpio.LOW);
+      exec(`i2cset -y 1 0x10' ${this.pinOpen} 0x00`);
     }, 200);
   }
 
   pressClose() {
     this.log.debug("Click Down");
-    rpio.open(this.pinClose, rpio.OUTPUT, rpio.HIGH);
+    exec(`i2cset -y 1 0x10' ${this.pinClose} 0xFF`);
     setTimeout(() => {
       this.log.debug("Unclick Down");
-      rpio.open(this.pinClose, rpio.OUTPUT, rpio.LOW);
+      exec(`i2cset -y 1 0x10' ${this.pinOpen} 0x00`);
     }, 200);
   }
 
