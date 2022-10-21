@@ -86,7 +86,16 @@ export default class DeltaBlindAccessory {
 
   pressOpen() {
     this.log.debug("Click Up");
-    exec(`i2cset -y 1 0x10' ${this.pinOpen} 0xFF`);
+    exec(`i2cset -y 1 0x10' ${this.pinOpen} 0xFF`, (error, stdout, stderr) => {
+      if (error) {
+        this.log.debug(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        this.log.debug(`stderr: ${stderr}`);
+        return;
+      }
+    });
     setTimeout(() => {
       this.log.debug("Unclick Up");
       exec(`i2cset -y 1 0x10' ${this.pinOpen} 0x00`);
