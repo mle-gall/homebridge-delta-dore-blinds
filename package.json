@@ -1,0 +1,43 @@
+{
+  "name": "homebridge-delta-dore-blinds",
+  "displayName": "Delta Dore Blinds",
+  "description": "Delta Dore Blinds Support via Rpi Relays",
+  "version": "0.0.1",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mwraith/somfi-blinds-homebridge.git"
+  },
+  "keywords": [
+    "homebridge-plugin",
+    "raspberry",
+    "pi",
+    "rts",
+    "homekit"
+  ],
+  "author": "mle-gall",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mwraith/somfi-blinds-homebridge/issues"
+  },
+  "homepage": "https://github.com/mwraith/somfi-blinds-homebridge",
+  "engines": {
+    "homebridge": ">=1.0.0",
+    "node": ">=10.17.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/runtime": "^7.18.3",
+    "debounce-promise": "^3.1.2",
+    "rpio": "^2.4.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.18.2",
+    "@babel/preset-env": "^7.18.2"
+  }
+}
